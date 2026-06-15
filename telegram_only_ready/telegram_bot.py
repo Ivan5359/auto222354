@@ -11,6 +11,7 @@ import requests
 
 BOT_TOKEN = os.environ.get("TELEGRAM_BOT_TOKEN", "")
 DB_PATH = os.environ.get("DB_PATH", "bot.sqlite3")
+BOT_VERSION = "telegram-only-v2"
 
 state = {"running": False, "stop": False, "last": "Готов к работе."}
 lock = threading.Lock()
@@ -179,6 +180,10 @@ def help_text():
     )
 
 
+def version_text():
+    return f"Версия бота: {BOT_VERSION}"
+
+
 def background_run(chat_id):
     ensure_accounts()
     conn = get_db()
@@ -228,7 +233,7 @@ def start_run(chat_id):
 def handle(chat_id, text):
     text = (text or "").strip().lower()
     if text in {"/start", "start", "старт"}:
-        send(chat_id, "Привет. Я простой Telegram-бот.\n\nНажми кнопку ниже.")
+        send(chat_id, f"Привет. Я простой Telegram-бот.\n\nВерсия: {BOT_VERSION}\n\nНажми кнопку ниже.")
     elif text in {"/accounts", "accounts", "аккаунты"}:
         send(chat_id, accounts_text())
     elif text in {"/run", "run", "запустить"}:
@@ -243,6 +248,8 @@ def handle(chat_id, text):
         send(chat_id, "Сбросил базу и создал новые тестовые аккаунты.")
     elif text in {"/help", "help", "помощь"}:
         send(chat_id, help_text())
+    elif text in {"/version", "version", "версия"}:
+        send(chat_id, version_text())
     else:
         send(chat_id, "Не понял. Нажми кнопку или напиши /help.")
 
@@ -262,6 +269,21 @@ def main():
         raise RuntimeError("Add TELEGRAM_BOT_TOKEN in Railway Variables")
     ensure_accounts()
     telegram("deleteWebhook", {"drop_pending_updates": True})
+    telegram(
+        "setMyCommands",
+        {
+            "commands": [
+                {"command": "start", "description": "Открыть меню"},
+                {"command": "accounts", "description": "Показать тестовые аккаунты"},
+                {"command": "run", "description": "Запустить dry-run"},
+                {"command": "status", "description": "Статистика"},
+                {"command": "stop", "description": "Остановить"},
+                {"command": "reset", "description": "Новые тестовые аккаунты"},
+                {"command": "version", "description": "Версия бота"},
+                {"command": "help", "description": "Помощь"},
+            ]
+        },
+    )
     print("Bot started in polling mode", flush=True)
 
     offset = None
