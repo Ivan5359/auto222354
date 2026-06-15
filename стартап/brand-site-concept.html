@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Концепт сайту для бренду</title>
+  <style>
+    :root {
+      --paper: #fbfaf7;
+      --ink: #20201d;
+      --muted: #6f6a62;
+      --line: #ded8cf;
+      --accent: #7f5637;
+      --accent-dark: #4e321f;
+      --sage: #7d8b75;
+      --sand: #eee4d6;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.45;
+    }
+
+    .nav {
+      width: 100%;
+      border-bottom: 1px solid var(--line);
+      background: rgba(251, 250, 247, 0.92);
+      position: sticky;
+      top: 0;
+      z-index: 2;
+    }
+
+    .nav-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .nav-links a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .nav-button,
+    .button {
+      border: 0;
+      border-radius: 6px;
+      background: var(--ink);
+      color: var(--white);
+      padding: 12px 16px;
+      font-weight: 800;
+      font-size: 14px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+    }
+
+    .hero {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 54px 24px 34px;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      width: fit-content;
+      color: var(--accent-dark);
+      background: var(--sand);
+      border: 1px solid #e0cbb7;
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(40px, 6vw, 76px);
+      line-height: 0.96;
+      letter-spacing: 0;
+      max-width: 720px;
+    }
+
+    .lead {
+      margin: 20px 0 0;
+      max-width: 600px;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .button.secondary {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--line);
+    }
+
+    .trust {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      max-width: 650px;
+    }
+
+    .trust-item {
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+    }
+
+    .trust-item strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 4px;
+    }
+
+    .trust-item span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .visual {
+      min-height: 560px;
+      background:
+        linear-gradient(150deg, rgba(32, 32, 29, 0.08), rgba(32, 32, 29, 0)),
+        var(--sand);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      padding: 22px;
+    }
+
+    .product-scene {
+      width: min(390px, 100%);
+      aspect-ratio: 0.72;
+      background:
+        radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.7), transparent 28%),
+        linear-gradient(160deg, #d7c4ad, #9d7b5c 52%, #4d3526);
+      border-radius: 190px 190px 12px 12px;
+      box-shadow: 0 28px 60px rgba(54, 38, 25, 0.28);
+      position: relative;
+    }
+
+    .product-scene::before {
+      content: "";
+      position: absolute;
+      width: 62%;
+      height: 54%;
+      left: 19%;
+      bottom: 16%;
+      background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0)),
+        #f7eee5;
+      border: 1px solid rgba(78, 50, 31, 0.18);
+      border-radius: 18px;
+      box-shadow: 0 18px 38px rgba(32, 32, 29, 0.16);
+    }
+
+    .product-scene::after {
+      content: "NEW COLLECTION";
+      position: absolute;
+      left: 50%;
+      bottom: 34%;
+      transform: translateX(-50%);
+      color: var(--accent-dark);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    .note {
+      position: absolute;
+      left: 22px;
+      bottom: 22px;
+      right: 22px;
+      background: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(222, 216, 207, 0.9);
+      border-radius: 8px;
+      padding: 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .note strong {
+      color: var(--ink);
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .band {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: var(--white);
+    }
+
+    .section {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 46px 24px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 22px;
+      margin-bottom: 22px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 460px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .item {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+      overflow: hidden;
+    }
+
+    .item-image {
+      height: 230px;
+      background: linear-gradient(145deg, #d0b89d, #efe4d5);
+      position: relative;
+    }
+
+    .item:nth-child(2) .item-image {
+      background: linear-gradient(145deg, #b9c3b2, #efe8db);
+    }
+
+    .item:nth-child(3) .item-image {
+      background: linear-gradient(145deg, #9d8c78, #f2e8dc);
+    }
+
+    .item-body {
+      padding: 16px;
+    }
+
+    .item-body strong {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+
+    .item-body span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .info {
+      border-top: 1px solid var(--line);
+      padding-top: 16px;
+    }
+
+    .info strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .info span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer-cta {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 42px 24px 58px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .footer-cta p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      max-width: 620px;
+    }
+
+    @media (max-width: 860px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding-top: 34px;
+      }
+
+      .visual {
+        min-height: 460px;
+      }
+
+      .trust,
+      .cards,
+      .info-grid,
+      .footer-cta {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        display: block;
+      }
+
+      .section-head p {
+        margin-top: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="brand">Brand Atelier</div>
+      <div class="nav-links">
+        <a href="#collection">Колекція</a>
+        <a href="#details">Доставка</a>
+        <a href="#contacts">Контакти</a>
+      </div>
+      <a class="nav-button" href="#contacts">Замовити</a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Український малий бренд</div>
+        <h1>Акуратна сторінка, яка допомагає клієнту швидше перейти до замовлення.</h1>
+        <p class="lead">
+          У концепті вся важлива інформація зібрана в одному місці: хто ви, що продаєте,
+          як замовити, як працює доставка та куди написати клієнту.
+        </p>
+        <div class="hero-actions">
+          <a class="button" href="#collection">Дивитися товари</a>
+          <a class="button secondary" href="#contacts">Написати в Direct</a>
+        </div>
+        <div class="trust">
+          <div class="trust-item">
+            <strong>Зрозуміла структура</strong>
+            <span>Клієнт не шукає інформацію по сторіс і постах.</span>
+          </div>
+          <div class="trust-item">
+            <strong>Швидке замовлення</strong>
+            <span>Кнопка веде в Instagram, Telegram або форму.</span>
+          </div>
+          <div class="trust-item">
+            <strong>Професійний вигляд</strong>
+            <span>Бренд виглядає впевненіше ще до першого діалогу.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="visual" aria-label="Візуальний концепт бренду">
+        <div class="product-scene"></div>
+        <div class="note">
+          <strong>Місце для реального фото продукту</strong>
+          Тут можна поставити найсильніше фото товару або колекції, щоб перший екран одразу продавав стиль бренду.
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="collection">
+      <div class="section">
+        <div class="section-head">
+          <h2>Колекція або головні товари</h2>
+          <p>Короткі картки допомагають швидко зрозуміти асортимент, ціну, матеріали та формат замовлення.</p>
+        </div>
+        <div class="cards">
+          <article class="item">
+            <div class="item-image"></div>
+            <div class="item-body">
+              <strong>Назва товару</strong>
+              <span>Короткий опис, матеріали, ціна або “під замовлення”.</span>
+            </div>
+          </article>
+          <article class="item">
+            <div class="item-image"></div>
+            <div class="item-body">
+              <strong>Назва товару</strong>
+              <span>Короткий опис, матеріали, ціна або “під замовлення”.</span>
+            </div>
+          </article>
+          <article class="item">
+            <div class="item-image"></div>
+            <div class="item-body">
+              <strong>Назва товару</strong>
+              <span>Короткий опис, матеріали, ціна або “під замовлення”.</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="details">
+      <div class="section-head">
+        <h2>Інформація без зайвих питань</h2>
+        <p>Блоки нижче зменшують кількість однакових повідомлень у Direct і роблять покупку зрозумілішою.</p>
+      </div>
+      <div class="info-grid">
+        <div class="info">
+          <strong>Як замовити</strong>
+          <span>Кнопка покупки, Direct, Telegram або проста форма.</span>
+        </div>
+        <div class="info">
+          <strong>Оплата</strong>
+          <span>Коротко пояснюємо доступні способи оплати.</span>
+        </div>
+        <div class="info">
+          <strong>Доставка</strong>
+          <span>Міста, країни, строки та базові умови.</span>
+        </div>
+        <div class="info">
+          <strong>Контакти</strong>
+          <span>Instagram, Telegram, email або WhatsApp в одному місці.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="footer-cta" id="contacts">
+      <div>
+        <h2>Готово для адаптації під ваш бренд</h2>
+        <p>У фінальній версії можна замінити кольори, фото, тексти, товари, кнопки та підключити зручний спосіб заявки.</p>
+      </div>
+      <a class="button" href="#">Залишити заявку</a>
+    </section>
+  </main>
+</body>
+</html>

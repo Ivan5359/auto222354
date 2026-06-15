@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Outreach Control</title>
+  <style>
+    :root {
+      --bg: #f5f2ec;
+      --panel: #ffffff;
+      --ink: #191714;
+      --muted: #716b62;
+      --line: #ded6cc;
+      --accent: #245c54;
+      --accent-soft: #e2efeb;
+      --warn: #9b5b2e;
+      --bad: #9d3434;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.45;
+    }
+
+    header {
+      border-bottom: 1px solid var(--line);
+      background: var(--panel);
+    }
+
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 22px;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 20px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 32px;
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .sub {
+      margin: 8px 0 0;
+      color: var(--muted);
+      max-width: 760px;
+    }
+
+    .badge {
+      color: var(--accent);
+      background: var(--accent-soft);
+      border: 1px solid #c7dfd7;
+      border-radius: 6px;
+      padding: 8px 10px;
+      font-size: 13px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    main.wrap {
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    section {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .section-head {
+      padding: 16px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .section-head strong {
+      font-size: 15px;
+    }
+
+    .section-body {
+      padding: 16px;
+      display: grid;
+      gap: 14px;
+    }
+
+    label {
+      display: grid;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 11px 12px;
+      background: #fffdfa;
+      color: var(--ink);
+      font: inherit;
+      font-size: 14px;
+    }
+
+    textarea {
+      min-height: 140px;
+      resize: vertical;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    button {
+      border: 1px solid var(--accent);
+      border-radius: 6px;
+      background: var(--accent);
+      color: #ffffff;
+      min-height: 42px;
+      padding: 10px 12px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    button.secondary {
+      background: transparent;
+      color: var(--accent);
+    }
+
+    button.danger {
+      border-color: var(--bad);
+      color: var(--bad);
+      background: transparent;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .stat {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      background: #fffdfa;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .stat span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 5px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      border-bottom: 1px solid var(--line);
+      padding: 10px;
+      text-align: left;
+      font-size: 13px;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--muted);
+      background: #fbf8f4;
+      font-size: 12px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 5px 8px;
+      font-size: 12px;
+      font-weight: 800;
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .pill.warn {
+      background: #f4e8dc;
+      color: var(--warn);
+    }
+
+    .pill.bad {
+      background: #f4dddd;
+      color: var(--bad);
+    }
+
+    .output {
+      white-space: pre-wrap;
+      background: #fffdfa;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+      min-height: 140px;
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    @media (max-width: 900px) {
+      main.wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap top">
+      <div>
+        <h1>Outreach Control</h1>
+        <p class="sub">Без автологина и авторассылки. Инструмент фильтрует лиды, убирает повторы, готовит батч и хранит историю контактов.</p>
+      </div>
+      <div class="badge">Human-in-the-loop</div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section>
+      <div class="section-head">
+        <strong>Фильтры</strong>
+      </div>
+      <div class="section-body">
+        <div class="row">
+          <label>
+            Мин. подписчиков
+            <input id="minFollowers" type="number" value="500" min="0">
+          </label>
+          <label>
+            Макс. подписчиков
+            <input id="maxFollowers" type="number" value="5000" min="0">
+          </label>
+        </div>
+
+        <label>
+          Ниша
+          <input id="niche" placeholder="одежда, украшения, сумки, свечи">
+        </label>
+
+        <label>
+          Сайт
+          <select id="siteMode">
+            <option value="no_site">Только без сайта</option>
+            <option value="has_site">Только с сайтом</option>
+            <option value="any">Не важно</option>
+          </select>
+        </label>
+
+        <label>
+          Размер батча
+          <input id="batchSize" type="number" value="20" min="1" max="50">
+        </label>
+
+        <label>
+          Текст сообщения
+          <textarea id="messageText">Здравствуйте! Я занимаюсь созданием сайтов для малых брендов. Могу сделать тестовый концепт сайта под ваш стиль и пожелания по доступной цене. Если интересно, могу показать пример.</textarea>
+        </label>
+
+        <div class="buttons">
+          <button id="buildBatch">Собрать батч</button>
+          <button id="exportCsv" class="secondary">Экспорт CSV</button>
+          <button id="clearAll" class="danger">Очистить всё</button>
+        </div>
+
+        <p class="hint">Формат добавления лидов ниже: @handle | followers | niche | site/no-site | note</p>
+      </div>
+    </section>
+
+    <div style="display:grid; gap:18px;">
+      <section>
+        <div class="section-head">
+          <strong>Добавить лиды</strong>
+          <span class="hint">Повторы удаляются</span>
+        </div>
+        <div class="section-body">
+          <textarea id="leadInput" placeholder="@brand.ua | 1200 | сумки | no-site | только Instagram&#10;@jewelry.ua | 3400 | украшения | has-site | сайт старый"></textarea>
+          <div class="buttons">
+            <button id="addLeads">Добавить</button>
+            <button id="sampleLeads" class="secondary">Пример</button>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <strong>Статистика</strong>
+        </div>
+        <div class="section-body">
+          <div class="stats">
+            <div class="stat"><strong id="totalCount">0</strong><span>всего лидов</span></div>
+            <div class="stat"><strong id="readyCount">0</strong><span>подходит</span></div>
+            <div class="stat"><strong id="contactedCount">0</strong><span>уже писали</span></div>
+            <div class="stat"><strong id="batchCount">0</strong><span>в батче</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <strong>Батч для ручной отправки</strong>
+          <span class="hint">Сначала проверь профиль глазами</span>
+        </div>
+        <div class="section-body">
+          <div id="batchOutput" class="output">Пока пусто.</div>
+          <div class="buttons">
+            <button id="markSent">Отметить батч как отправленный</button>
+            <button id="copyBatch" class="secondary">Скопировать батч</button>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-head">
+          <strong>Лиды</strong>
+        </div>
+        <div class="section-body" style="padding:0;">
+          <table>
+            <thead>
+              <tr>
+                <th>Аккаунт</th>
+                <th>Подписчики</th>
+                <th>Ниша</th>
+                <th>Сайт</th>
+                <th>Статус</th>
+                <th>Заметка</th>
+              </tr>
+            </thead>
+            <tbody id="leadsTable"></tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const storageKey = "outreach-control-v1";
+    let state = loadState();
+    let currentBatch = [];
+
+    const els = {
+      minFollowers: document.getElementById("minFollowers"),
+      maxFollowers: document.getElementById("maxFollowers"),
+      niche: document.getElementById("niche"),
+      siteMode: document.getElementById("siteMode"),
+      batchSize: document.getElementById("batchSize"),
+      messageText: document.getElementById("messageText"),
+      leadInput: document.getElementById("leadInput"),
+      leadsTable: document.getElementById("leadsTable"),
+      batchOutput: document.getElementById("batchOutput"),
+      totalCount: document.getElementById("totalCount"),
+      readyCount: document.getElementById("readyCount"),
+      contactedCount: document.getElementById("contactedCount"),
+      batchCount: document.getElementById("batchCount")
+    };
+
+    document.getElementById("addLeads").addEventListener("click", addLeads);
+    document.getElementById("sampleLeads").addEventListener("click", addSample);
+    document.getElementById("buildBatch").addEventListener("click", buildBatch);
+    document.getElementById("markSent").addEventListener("click", markSent);
+    document.getElementById("copyBatch").addEventListener("click", copyBatch);
+    document.getElementById("exportCsv").addEventListener("click", exportCsv);
+    document.getElementById("clearAll").addEventListener("click", clearAll);
+
+    render();
+
+    function loadState() {
+      try {
+        return JSON.parse(localStorage.getItem(storageKey)) || { leads: [] };
+      } catch {
+        return { leads: [] };
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem(storageKey, JSON.stringify(state));
+    }
+
+    function normalizeHandle(value) {
+      const clean = value.trim().replace(/^https?:\/\/(www\.)?instagram\.com\//i, "").replace(/\/.*$/, "");
+      return clean.startsWith("@") ? clean.toLowerCase() : "@" + clean.toLowerCase();
+    }
+
+    function parseLead(line) {
+      const parts = line.split("|").map(part => part.trim());
+      if (!parts[0]) return null;
+      const handle = normalizeHandle(parts[0]);
+      const followers = Number(String(parts[1] || "").replace(/[^\d]/g, "")) || 0;
+      const niche = parts[2] || "";
+      const rawSite = (parts[3] || "").toLowerCase();
+      const hasSite = rawSite.includes("has") || rawSite.includes("site") && !rawSite.includes("no") || rawSite.includes("есть");
+      const note = parts.slice(4).join(" | ");
+      return {
+        handle,
+        followers,
+        niche,
+        hasSite,
+        note,
+        status: "new",
+        lastContacted: ""
+      };
+    }
+
+    function addLeads() {
+      const lines = els.leadInput.value.split(/\n+/);
+      const existing = new Set(state.leads.map(lead => lead.handle));
+      let added = 0;
+
+      for (const line of lines) {
+        const lead = parseLead(line);
+        if (!lead || existing.has(lead.handle)) continue;
+        state.leads.push(lead);
+        existing.add(lead.handle);
+        added += 1;
+      }
+
+      els.leadInput.value = "";
+      saveState();
+      render();
+      alert(`Добавлено: ${added}`);
+    }
+
+    function addSample() {
+      els.leadInput.value = [
+        "@episodebags.ua | 2400 | сумки | no-site | пример",
+        "@warmjewelry.ua | 1300 | украшения | no-site | только Direct",
+        "@soft.candles.ua | 4200 | свечи | has-site | можно улучшать сайт",
+        "@linen.brand.ua | 780 | одежда | no-site | маленький бренд"
+      ].join("\\n");
+    }
+
+    function getFilters() {
+      return {
+        minFollowers: Number(els.minFollowers.value) || 0,
+        maxFollowers: Number(els.maxFollowers.value) || Number.MAX_SAFE_INTEGER,
+        niche: els.niche.value.trim().toLowerCase(),
+        siteMode: els.siteMode.value,
+        batchSize: Math.min(Number(els.batchSize.value) || 20, 50)
+      };
+    }
+
+    function matchesFilters(lead, filters) {
+      if (lead.status === "contacted") return false;
+      if (lead.followers < filters.minFollowers) return false;
+      if (lead.followers > filters.maxFollowers) return false;
+      if (filters.niche && !lead.niche.toLowerCase().includes(filters.niche)) return false;
+      if (filters.siteMode === "no_site" && lead.hasSite) return false;
+      if (filters.siteMode === "has_site" && !lead.hasSite) return false;
+      return true;
+    }
+
+    function buildBatch() {
+      const filters = getFilters();
+      currentBatch = state.leads.filter(lead => matchesFilters(lead, filters)).slice(0, filters.batchSize);
+      const message = els.messageText.value.trim();
+
+      if (!currentBatch.length) {
+        els.batchOutput.textContent = "Нет лидов под эти фильтры.";
+      } else {
+        els.batchOutput.textContent = currentBatch.map((lead, index) => {
+          return `${index + 1}. ${lead.handle}\\nНиша: ${lead.niche || "-"}\\nПодписчики: ${lead.followers || "-"}\\nСайт: ${lead.hasSite ? "есть" : "нет"}\\nСообщение:\\n${message}\\n`;
+        }).join("\\n---\\n\\n");
+      }
+
+      renderStats();
+    }
+
+    function markSent() {
+      if (!currentBatch.length) {
+        alert("Сначала собери батч.");
+        return;
+      }
+
+      const now = new Date().toISOString();
+      const handles = new Set(currentBatch.map(lead => lead.handle));
+      state.leads = state.leads.map(lead => {
+        if (!handles.has(lead.handle)) return lead;
+        return { ...lead, status: "contacted", lastContacted: now };
+      });
+
+      currentBatch = [];
+      els.batchOutput.textContent = "Батч отмечен как отправленный.";
+      saveState();
+      render();
+    }
+
+    async function copyBatch() {
+      await navigator.clipboard.writeText(els.batchOutput.textContent);
+      alert("Батч скопирован.");
+    }
+
+    function exportCsv() {
+      const header = ["handle", "followers", "niche", "hasSite", "status", "lastContacted", "note"];
+      const rows = state.leads.map(lead => header.map(key => JSON.stringify(lead[key] ?? "")).join(","));
+      const csv = [header.join(","), ...rows].join("\\n");
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "outreach-leads.csv";
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function clearAll() {
+      if (!confirm("Удалить все лиды и историю?")) return;
+      state = { leads: [] };
+      currentBatch = [];
+      saveState();
+      render();
+    }
+
+    function render() {
+      renderTable();
+      renderStats();
+    }
+
+    function renderStats() {
+      const filters = getFilters();
+      els.totalCount.textContent = state.leads.length;
+      els.readyCount.textContent = state.leads.filter(lead => matchesFilters(lead, filters)).length;
+      els.contactedCount.textContent = state.leads.filter(lead => lead.status === "contacted").length;
+      els.batchCount.textContent = currentBatch.length;
+    }
+
+    function renderTable() {
+      els.leadsTable.innerHTML = "";
+      for (const lead of state.leads) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${escapeHtml(lead.handle)}</td>
+          <td>${lead.followers || "-"}</td>
+          <td>${escapeHtml(lead.niche || "-")}</td>
+          <td>${lead.hasSite ? '<span class="pill warn">есть</span>' : '<span class="pill">нет</span>'}</td>
+          <td>${lead.status === "contacted" ? '<span class="pill bad">писали</span>' : '<span class="pill">новый</span>'}</td>
+          <td>${escapeHtml(lead.note || "-")}</td>
+        `;
+        els.leadsTable.appendChild(tr);
+      }
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+  </script>
+</body>
+</html>
