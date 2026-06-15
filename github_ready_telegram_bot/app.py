@@ -243,7 +243,78 @@ def handle(chat_id, text):
 
 @app.get("/")
 def index():
-    return "Bot is running. Open Telegram and send /start."
+    token_status = "задан" if BOT_TOKEN else "не задан"
+    public_url = PUBLIC_URL or os.environ.get("RAILWAY_PUBLIC_DOMAIN", "")
+    if public_url and not public_url.startswith("http"):
+        public_url = "https://" + public_url
+    public_status = public_url or "не задан"
+    return f"""
+    <!doctype html>
+    <html lang="ru">
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>Telegram Bot</title>
+      <style>
+        body {{
+          margin: 0;
+          font-family: Arial, sans-serif;
+          background: #f4f6f8;
+          color: #111827;
+        }}
+        main {{
+          max-width: 720px;
+          margin: 0 auto;
+          padding: 36px 18px;
+        }}
+        section {{
+          background: white;
+          border: 1px solid #e5e7eb;
+          border-radius: 10px;
+          padding: 22px;
+        }}
+        h1 {{ margin-top: 0; }}
+        code {{
+          background: #eef2ff;
+          padding: 3px 6px;
+          border-radius: 5px;
+        }}
+        a.button {{
+          display: inline-block;
+          margin-top: 12px;
+          background: #2563eb;
+          color: white;
+          text-decoration: none;
+          padding: 11px 15px;
+          border-radius: 7px;
+          font-weight: 700;
+        }}
+        li {{ margin: 8px 0; }}
+      </style>
+    </head>
+    <body>
+      <main>
+        <section>
+          <h1>Бот запущен</h1>
+          <p>Сайт работает. Теперь нужно подключить Telegram webhook.</p>
+
+          <p><b>TELEGRAM_BOT_TOKEN:</b> {escape(token_status)}</p>
+          <p><b>PUBLIC_URL:</b> {escape(public_status)}</p>
+
+          <ol>
+            <li>В Railway открой <code>Variables</code>.</li>
+            <li>Проверь, что есть <code>TELEGRAM_BOT_TOKEN</code>.</li>
+            <li>Проверь, что есть <code>PUBLIC_URL</code> со значением <code>https://auto222354-production.up.railway.app</code>.</li>
+            <li>Нажми кнопку ниже, чтобы подключить Telegram.</li>
+            <li>Потом открой своего бота в Telegram и напиши <code>/start</code>.</li>
+          </ol>
+
+          <a class="button" href="/setup">Подключить Telegram</a>
+        </section>
+      </main>
+    </body>
+    </html>
+    """
 
 
 @app.get("/setup")
