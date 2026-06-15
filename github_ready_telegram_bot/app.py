@@ -317,6 +317,11 @@ def index():
     """
 
 
+@app.get("/health")
+def health():
+    return {"ok": True, "message": "app is alive"}, 200
+
+
 @app.get("/setup")
 def setup():
     if not BOT_TOKEN:
@@ -347,6 +352,5 @@ def webhook(token):
 
 
 if __name__ == "__main__":
-    ensure_accounts()
     port = int(os.environ.get("PORT", "8080"))
     app.run(host="0.0.0.0", port=port)
